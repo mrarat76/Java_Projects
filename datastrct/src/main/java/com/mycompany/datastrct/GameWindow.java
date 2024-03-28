@@ -4,6 +4,9 @@
  */
 package com.mycompany.datastrct;
 
+import static com.mycompany.datastrct.PlayerCard.sumbng;
+import static com.mycompany.datastrct.PlayerCard.sumtmb;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,12 +26,15 @@ import javax.swing.Timer;
  *
  * @author mehdiarat
  */
-
-
+// Çinko check için iki tane for döngüsü açtır, o for döngülerinde rowlar da her 9 elementte bir kontrol ettirsin eğer örneğin ilk 9 elemntin hepsi -1 ise countu bir artır veya ikincisi öyleyse artır.
+// Bunu nerede yapacağız şöyle yapacağız, yeni bir frameda list açtır ve listte her bir oyuncunun çinko sayısı görülsün, listede ilk kim 3 çinko yaparsa o kazansın.
+// Ayrıca spinnerdan eleman sildir.
+// Sortlama yapılacak kartlarda.
+// Sayılar eşleşince silme boyat.
 public class GameWindow extends javax.swing.JFrame {
-        private int numPlayers;
-            private Timer timer;
 
+    private static int numPlayers;
+    private Timer timer;
 
     public static MultiLinkedList playerCards; // playerCards değişkenini GameWindow sınıfında tanımladık
 
@@ -38,14 +44,15 @@ public class GameWindow extends javax.swing.JFrame {
     public GameWindow() {
         initComponents();
     }
-    
-    public GameWindow(int numPlayers){
-           this.numPlayers= numPlayers;
-           initComponents();
-           playerCards = generatePlayerCards(numPlayers);
+
+    public GameWindow(int numPlayers) {
+        this.numPlayers = numPlayers;
+        initComponents();
+        playerCards = generatePlayerCards(numPlayers);
+        checkBingoAndUpdateCount(numPlayers);
 
     }
-   
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,6 +96,12 @@ public class GameWindow extends javax.swing.JFrame {
         jSpinner1 = new javax.swing.JSpinner();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -203,10 +216,32 @@ public class GameWindow extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("jButton3");
+        jButton3.setText("START");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Selected Player's Bingo Count:");
+
+        jLabel3.setText("jLabel3");
+
+        jButton4.setText("EXIT");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setText("Selected Player's Tombola Count:");
+
+        jLabel5.setText("jLabel5");
+
+        jButton5.setText("Details of Tombalas and Bingos");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -222,14 +257,31 @@ public class GameWindow extends javax.swing.JFrame {
                 .addGap(42, 42, 42))
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 828, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(47, 47, 47)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton4)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(42, 42, 42)
-                        .addComponent(jButton2))
-                    .addComponent(jButton3))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 828, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(42, 42, 42)
+                                        .addComponent(jButton2))
+                                    .addComponent(jButton3)
+                                    .addComponent(jButton5)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel5))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(jLabel3)))))))
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -237,16 +289,27 @@ public class GameWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(252, 252, 252)
+                        .addGap(53, 53, 53)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(144, 144, 144)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton5)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -257,26 +320,26 @@ public class GameWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Object selectedItemObj = jComboBox1.getSelectedItem();
-    if (selectedItemObj != null) { // Seçilen öğe null değilse devam et
-        String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
-        try {
-            int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
-            showPlayerCards(selectedPlayer); // Oyuncunun kartlarını göster
-        } catch (NumberFormatException e) {
-            // Seçilen öğe Integer'a dönüştürülemediği için hata oluştu
-            // Bu durumda bir hata mesajı gösterebilir veya uygun bir işlem yapabilirsiniz
-            System.err.println("Hata: Seçilen öğe bir sayıya dönüştürülemedi!");
+        if (selectedItemObj != null) { // Seçilen öğe null değilse devam et
+            String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
+            try {
+                int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
+                showPlayerCards(selectedPlayer); // Oyuncunun kartlarını göster
+            } catch (NumberFormatException e) {
+                // Seçilen öğe Integer'a dönüştürülemediği için hata oluştu
+                // Bu durumda bir hata mesajı gösterebilir veya uygun bir işlem yapabilirsiniz
+                System.err.println("Hata: Seçilen öğe bir sayıya dönüştürülemedi!");
+            }
+        } else {
+            // Seçilen öğe null ise bir işlem yapma veya hata mesajı gösterme
+            System.err.println("Hata: Bir öğe seçilmedi!");
         }
-    } else {
-        // Seçilen öğe null ise bir işlem yapma veya hata mesajı gösterme
-        System.err.println("Hata: Bir öğe seçilmedi!");
-    }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -286,16 +349,30 @@ public class GameWindow extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-                Object selectedItemObj = jComboBox1.getSelectedItem();
-                        String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
+        Object selectedItemObj = jComboBox1.getSelectedItem();
+        String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
 
-                            int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
-
+        int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
 
         stopSpinner4(selectedPlayer);
+        checkBingoAndUpdateCount(selectedPlayer);
     }//GEN-LAST:event_jButton2ActionPerformed
-private void showPlayerCards(int playerIndex) {
-       /*  JFrame playerFrame = new JFrame();
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        dispose();
+        TombolaGameGUI tm = new TombolaGameGUI();
+        tm.setVisible(true);
+
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        PlayerCard pl = new PlayerCard(numPlayers);
+        pl.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+    private void showPlayerCards(int playerIndex) {
+        /*  JFrame playerFrame = new JFrame();
         playerFrame.setTitle("Player " + playerIndex + "'s Cards");
         playerFrame.setSize(300, 200);
         playerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -320,44 +397,75 @@ private void showPlayerCards(int playerIndex) {
         // Bu listenin içeriğini yazdır
         currentList.printList(playerFrame);
         
-     */
-       /*PlayerCard pla = new PlayerCard(playerIndex);
+         */
+ /*PlayerCard pla = new PlayerCard(playerIndex);
         pla.setVisible(true);*/
-       
-       
-       
-    MultiLinkedList currentList = playerCards;
-    for (int i = 1; i <= playerIndex; i++) {
+
+        MultiLinkedList currentList = playerCards;
+        for (int i = 1; i <= playerIndex; i++) {
+            if (currentList == null) {
+                System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+                return;
+            }
+            currentList = currentList.next;
+        }
+
         if (currentList == null) {
             System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
             return;
         }
-        currentList = currentList.next;
-    }
 
-    if (currentList == null) {
-        System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
-        return;
-    }
+        NodeClass current = currentList.head;
+        int index = 1;
 
-    NodeClass current = currentList.head;
-    int index = 1;
-    while (current != null) {
-        JLabel label = findLabelByIndex(index++);
-        if (label != null) {
-            if (current.data == -1) {
-                label.setText("X");
+        while (current != null) {
+            JLabel label = findLabelByIndex(index++);
+            if (label != null) {
+                if (current.data == -1) {
+                    label.setText("X");
+                    label.setForeground(Color.BLACK);
+                    label.setBackground(Color.WHITE); // Arka plan rengi beyaz
+
+                } else if (current.data == -2) {
+                    label.setText("T");
+                    label.setForeground(Color.RED); // Kırmızı renk
+
+                } else {
+                    label.setText(Integer.toString(current.data));
+                    label.setForeground(Color.BLACK);
+                    label.setBackground(Color.WHITE);
+                }
             } else {
-                label.setText(Integer.toString(current.data));
+                System.out.println("Hata: Belirtilen indekse sahip bir JLabel bulunamadı.");
             }
-        } else {
-            System.out.println("Hata: Belirtilen indekse sahip bir JLabel bulunamadı.");
+            current = current.down;
         }
-        current = current.down;
-    }
-}
 
-        private void startSpinner() {
+        /* 
+    int ch= 0;
+    while(current!= null){
+        if(current.data==-1 ){
+            ch++;
+            current =current.down;
+        } else{
+            current = current.down;
+            
+        }
+        
+    }
+    
+    if(ch % 9== 0){
+        if(ch !=0){
+            JOptionPane.showMessageDialog(null, "Bingoo!", "Great!", JOptionPane.INFORMATION_MESSAGE); 
+                 currentList.bingocn ++;
+        }
+                 
+
+    }
+    jLabel3.setText(String.valueOf(currentList.bingocn));*/
+    }
+
+    private void startSpinner() {
         timer = new Timer(100, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jSpinner1.setValue((int) (Math.random() * 91)); // Rasgele sayı
@@ -365,8 +473,8 @@ private void showPlayerCards(int playerIndex) {
         });
         timer.start();
     }
-       
-     private void stopSpinner() {
+
+    private void stopSpinner() {
         if (timer != null) {
             timer.stop();
             int value = (int) jSpinner1.getValue();
@@ -384,164 +492,271 @@ private void showPlayerCards(int playerIndex) {
         }
     }
 
-     
-     private void stopSpinner2() {
-    if (timer != null) {
-        timer.stop();
-        int value = (int) jSpinner1.getValue();
-        System.out.println("Stopped at: " + value);
-        
-        SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
-        Comparable min = model.getMinimum();
-        Comparable max = model.getMaximum();
-        List<Integer> list = new ArrayList<>();
-        
-        // You need to iterate through values of Comparable type.
-        // Since we're dealing with integers, it's safe to assume Comparable is Integer.
-        for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer)i + 1) {
-            if (i.compareTo(value) != 0) { // compareTo() compares the values
-                list.add((Integer) i);
-            }
-        }
-        
-        model = new SpinnerNumberModel(value, min, max, 1);
-        jSpinner1.setModel(model);
-    }
-}
-private void stopSpinner3() {
-    if (timer != null) {
-        timer.stop();
-        int value = (int) jSpinner1.getValue();
-        System.out.println("Stopped at: " + value);
-        
-        SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
-        Comparable min = model.getMinimum();
-        Comparable max = model.getMaximum();
-        List<Integer> list = new ArrayList<>();
-        
-        if (min != null) { // Check if min is not null
+    private void stopSpinner2() {
+        if (timer != null) {
+            timer.stop();
+            int value = (int) jSpinner1.getValue();
+            System.out.println("Stopped at: " + value);
+
+            SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
+            Comparable min = model.getMinimum();
+            Comparable max = model.getMaximum();
+            List<Integer> list = new ArrayList<>();
+
             // You need to iterate through values of Comparable type.
             // Since we're dealing with integers, it's safe to assume Comparable is Integer.
-            for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer)i + 1) {
+            for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer) i + 1) {
                 if (i.compareTo(value) != 0) { // compareTo() compares the values
                     list.add((Integer) i);
                 }
             }
+
+            model = new SpinnerNumberModel(value, min, max, 1);
+            jSpinner1.setModel(model);
         }
-        
-        model = new SpinnerNumberModel(value, min, max, 1);
-        jSpinner1.setModel(model);
     }
-}
 
+    private void stopSpinner3() {
+        if (timer != null) {
+            timer.stop();
+            int value = (int) jSpinner1.getValue();
+            System.out.println("Stopped at: " + value);
 
-private void stopSpinner4(int playerIndex) {
-    if (timer != null) {
-        timer.stop();
-        int value = (int) jSpinner1.getValue();
-        System.out.println("Stopped at: " + value);
-        
-        SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
-        Comparable min = model.getMinimum();
-        Comparable minValueComparable = model.getMinimum();
-        int minValue = minValueComparable != null ? (int) minValueComparable : 0;
-        Comparable max = model.getMaximum();
-        List<Integer> list1 = new ArrayList<>();
-        
-        if (min != null) { // Check if min is not null
-            // You need to iterate through values of Comparable type.
-            // Since we're dealing with integers, it's safe to assume Comparable is Integer.
-            for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer)i + 1) {
-                if (i.compareTo(value) != 0) { // compareTo() compares the values
-                    list1.add((Integer) i);
+            SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
+            Comparable min = model.getMinimum();
+            Comparable max = model.getMaximum();
+            List<Integer> list = new ArrayList<>();
+
+            if (min != null) { // Check if min is not null
+                // You need to iterate through values of Comparable type.
+                // Since we're dealing with integers, it's safe to assume Comparable is Integer.
+                for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer) i + 1) {
+                    if (i.compareTo(value) != 0) { // compareTo() compares the values
+                        list.add((Integer) i);
+                    }
                 }
             }
+
+            model = new SpinnerNumberModel(value, min, max, 1);
+            jSpinner1.setModel(model);
+        }
+    }
+
+    private void stopSpinner4(int playerIndex) {
+        if (timer != null) {
+            timer.stop();
+            int value = (int) jSpinner1.getValue();
+            System.out.println("Stopped at: " + value);
+
+            SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
+            Comparable min = model.getMinimum();
+            Comparable minValueComparable = model.getMinimum();
+            int minValue = minValueComparable != null ? (int) minValueComparable : 0;
+            Comparable max = model.getMaximum();
+            List<Integer> list1 = new ArrayList<>();
+
+            if (min != null) { // Check if min is not null
+                // You need to iterate through values of Comparable type.
+                // Since we're dealing with integers, it's safe to assume Comparable is Integer.
+                for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer) i + 1) {
+                    if (i.compareTo(value) != 0) { // compareTo() compares the values
+                        list1.add((Integer) i);
+                    }
+                }
+            }
+
+            // Seçilen değeri listeden çıkar
+            list1.remove(Integer.valueOf(value));
+
+            // Yeni SpinnerNumberModel'i güncelle
+            model = new SpinnerNumberModel(minValue, min, max, 1);
+            jSpinner1.setModel(model);
+
+            MultiLinkedList currentList = playerCards;
+            for (int i = 1; i <= playerIndex; i++) {
+                if (currentList == null) {
+                    System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+                    return;
+                }
+                currentList = currentList.next;
+            }
+
+            NodeClass current = currentList.head;
+            int index = 1;
+            while (current != null) {
+                if (current.data == value) {
+                    JOptionPane.showMessageDialog(null, "TOMBOLA!", "Great!", JOptionPane.INFORMATION_MESSAGE);
+                    sumtmb.addElement("Player" + playerIndex + ", Tombola Number =" + value);
+                    JLabel label = findLabelByIndex(index);
+                    label.setText("T");
+                    label.setForeground(Color.red);
+                    current.data = -2;
+
+                } else {
+                    current = current.down;
+                    ++index;
+                }
+
+                /*     
+    int ch= 0;
+    while(current!= null){
+        if(current.data==-1 ){
+            ch++;
+            current =current.down;
+        } else{
+            current = current.down;
+            
         }
         
-        // Seçilen değeri listeden çıkar
-        list1.remove(Integer.valueOf(value));
-        
-        // Yeni SpinnerNumberModel'i güncelle
-        model = new SpinnerNumberModel(minValue, min, max, 1);
-        jSpinner1.setModel(model);
-        
-         MultiLinkedList currentList = playerCards;
-    for (int i = 1; i <= playerIndex; i++) {
-        if (currentList == null) {
-            System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
-            return;
+    }
+    
+    if(ch % 9== 0){
+        if(ch !=0){
+            JOptionPane.showMessageDialog(null, "Bingoo!", "Great!", JOptionPane.INFORMATION_MESSAGE); 
+                 currentList.bingocn ++;
         }
-        currentList = currentList.next;
+                 
+
     }
-    
-    NodeClass current = currentList.head;
-    int index = 1;
-    while (current != null) {
-       if(current.data == value){
-         JOptionPane.showMessageDialog(null, "TOMBOLA!", "Great!", JOptionPane.INFORMATION_MESSAGE);  
-         JLabel label = findLabelByIndex(index);
-         label.setText("X");
-         current.data=-1;
+    jLabel3.setText(String.valueOf(currentList.bingocn));*/
+                // Çinkolar!!!!!!!!
+            }
 
-           
-           
-       } else{
-           current = current.down;
-           ++index;
-       }
-       // Çinkolar!!!!!!!!
-        
+        }
     }
-    
-    
-    
 
-        
-        
+    public void checkBingoAndUpdateCount(int playerIndex) {
+
+        MultiLinkedList currentList = playerCards;
+        for (int i = 1; i <= playerIndex; i++) {
+            if (currentList == null) {
+                System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+                return;
+            }
+            currentList = currentList.next;
+        }
+
+        NodeClass current = currentList.head;
+        // 9x3 kart oluşturma
+        int cinko = 0;
+        int sumtomb = 0;
+        for (int row = 0; row < 3; row++) {
+            int tombala = 0;
+            for (int col = 0; col < 9; col++) {
+                if (current.data == -2) {
+                    tombala++;
+                    sumtomb++;
+                    current = current.down;
+                } else {
+                    current = current.down;
+                }
+
+            }
+            if (tombala > 4) {
+                cinko++;
+            }
+
+        }
+
+        jLabel3.setText(String.valueOf(cinko));
+        jLabel5.setText(String.valueOf(sumtomb));
+        boolean found = false;
+        int index = 0;
+        while (index < sumbng.size()) {
+            String element = String.valueOf(sumbng.getElementAt(index));
+            if (element.startsWith("Player" + playerIndex)) {
+                found = true;
+                break;
+            }
+            index++;
+        }
+
+        // Eğer varsa değeri güncelle, yoksa yeni bir öğe ekle
+        if (found) {
+            sumbng.set(index, "Player" + playerIndex + ", Tombola Number =" + cinko);
+        } else {
+            sumbng.addElement("Player" + playerIndex + ", Tombola Number =" + cinko);
+        }
+
+        /*NodeClass current = playerCards.head;
+        int ch = 0; // Çinko sayısını tutmak için sayaç
+        while (current != null) {
+            if (current.data == -1) {
+                ch++; // -1 olduğunda çinko sayısını artır
+            }
+            current = current.down;
+        }
+
+        // Çinko sayısını kontrol et
+        if (ch % 9 == 0) { // Her satırda 9 hücre olduğunu varsayıyorum
+            if (ch != 0) {
+                JOptionPane.showMessageDialog(null, "Bingoo!", "Great!", JOptionPane.INFORMATION_MESSAGE);
+                playerCards.bingocn++; // Çinko sayısını artır
+
+            }
+        }*/
     }
-}
 
-
-
-
-private JLabel findLabelByIndex(int index) {
-            return switch (index) {
-                case 1 -> jbl1;
-                case 2 -> jbl2;
-                case 3 -> jbl3;
-                case 4 -> jbl4;
-                case 5 -> jbl5;
-                case 6 -> jbl6;
-                case 7 -> jbl7;
-                case 8 -> jbl8;
-                case 9 -> jbl9;
-                case 10 -> jbl10;
-                case 11 -> jbl11;
-                case 12 -> jbl12;
-                case 13 -> jbl13;
-                case 14 -> jbl14;
-                case 15 -> jbl15;
-                case 16 -> jbl16;
-                case 17 -> jbl17;
-                case 18 -> jbl18;
-                case 19 -> jbl19;
-                case 20 -> jbl20;
-                case 21 -> jbl21;
-                case 22 -> jbl22;
-                case 23 -> jbl23;
-                case 24 -> jbl24;
-                case 25 -> jbl25;
-                case 26 -> jbl26;
-                case 27 -> jbl27;
-                default -> null;
-            };
-}
-
-
-
-
-
-
+    private JLabel findLabelByIndex(int index) {
+        return switch (index) {
+            case 1 ->
+                jbl1;
+            case 2 ->
+                jbl2;
+            case 3 ->
+                jbl3;
+            case 4 ->
+                jbl4;
+            case 5 ->
+                jbl5;
+            case 6 ->
+                jbl6;
+            case 7 ->
+                jbl7;
+            case 8 ->
+                jbl8;
+            case 9 ->
+                jbl9;
+            case 10 ->
+                jbl10;
+            case 11 ->
+                jbl11;
+            case 12 ->
+                jbl12;
+            case 13 ->
+                jbl13;
+            case 14 ->
+                jbl14;
+            case 15 ->
+                jbl15;
+            case 16 ->
+                jbl16;
+            case 17 ->
+                jbl17;
+            case 18 ->
+                jbl18;
+            case 19 ->
+                jbl19;
+            case 20 ->
+                jbl20;
+            case 21 ->
+                jbl21;
+            case 22 ->
+                jbl22;
+            case 23 ->
+                jbl23;
+            case 24 ->
+                jbl24;
+            case 25 ->
+                jbl25;
+            case 26 ->
+                jbl26;
+            case 27 ->
+                jbl27;
+            default ->
+                null;
+        };
+    }
 
     /**
      * @param args the command line arguments
@@ -576,64 +791,52 @@ private JLabel findLabelByIndex(int index) {
                 new GameWindow().setVisible(true);
             }
         });
-        
-        
+
     }
-    
-    
- 
-    
-    
-    
+
     private MultiLinkedList generatePlayerCards(int numPlayers) {
-    MultiLinkedList firstPlayer = new MultiLinkedList();
-    MultiLinkedList currentPlayer = firstPlayer;
-    Random random = new Random();
+        MultiLinkedList firstPlayer = new MultiLinkedList();
+        MultiLinkedList currentPlayer = firstPlayer;
+        Random random = new Random();
 
-    for (int i = 0; i < numPlayers; i++) {
-        MultiLinkedList card = new MultiLinkedList();
+        for (int i = 0; i < numPlayers; i++) {
+            MultiLinkedList card = new MultiLinkedList();
 
-        // 9x3 kart oluşturma
-        for (int row = 0; row < 3; row++) {
-            for (int col = 0; col < 9; col++) {
-                int randomNumber = random.nextInt(90) + 1;
-                card.add(randomNumber);
-            }
-        }
-
-        // Her satırda 4 düğümü -1 olarak işaretle
-        for (int row = 0; row < 3; row++) {
-            Set<Integer> markedIndexes = new HashSet<>();
-            NodeClass current = card.head;
-            int numX = 4;
-            while (numX > 0) {
-                int randomIndex = random.nextInt(9);
-                if (!markedIndexes.contains(randomIndex)) {
-                    markedIndexes.add(randomIndex);
-                    NodeClass temp = current;
-                    for (int k = 0; k < randomIndex + (row * 9); k++) {
-                        temp = temp.down;
-                    }
-                    temp.data = -1;
-                    numX--;
+            // 9x3 kart oluşturma
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 9; col++) {
+                    int randomNumber = random.nextInt(90) + 1;
+                    card.add(randomNumber);
                 }
             }
+
+            // Her satırda 4 düğümü -1 olarak işaretle
+            for (int row = 0; row < 3; row++) {
+                Set<Integer> markedIndexes = new HashSet<>();
+                NodeClass current = card.head;
+                int numX = 4;
+                while (numX > 0) {
+                    int randomIndex = random.nextInt(9);
+                    if (!markedIndexes.contains(randomIndex)) {
+                        markedIndexes.add(randomIndex);
+                        NodeClass temp = current;
+                        for (int k = 0; k < randomIndex + (row * 9); k++) {
+                            temp = temp.down;
+                        }
+                        temp.data = -1;
+                        numX--;
+                    }
+                }
+            }
+
+            // Bağlantıları ayarla
+            currentPlayer.next = card;
+            currentPlayer = card;
         }
 
-        // Bağlantıları ayarla
-        currentPlayer.next = card;
-        currentPlayer = card;
+        return firstPlayer;
     }
 
-    return firstPlayer;
-}
-
-    
-    
-    
-    
-    
-    
     /*
     private MultiLinkedList generatePlayerCards(int numPlayers) {
     MultiLinkedList firstPlayer = new MultiLinkedList();
@@ -676,13 +879,8 @@ private JLabel findLabelByIndex(int index) {
     return firstPlayer;
 }
 
-    */
-    
-    
-    
-    
-    
-  /*  private MultiLinkedList generatePlayerCards(int numPlayers) {
+     */
+ /*  private MultiLinkedList generatePlayerCards(int numPlayers) {
     MultiLinkedList firstPlayer = new MultiLinkedList();
     MultiLinkedList currentPlayer = firstPlayer;
     Random random = new Random();
@@ -718,16 +916,8 @@ private JLabel findLabelByIndex(int index) {
 
     return firstPlayer;
 }
-*/
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
+     */
+ /*
     private MultiLinkedList generatePlayerCards(int numPlayers) {
     MultiLinkedList firstPlayer = new MultiLinkedList();
     MultiLinkedList currentPlayer = firstPlayer;
@@ -758,14 +948,20 @@ private JLabel findLabelByIndex(int index) {
 
     return firstPlayer;
 }
-*/
+     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JLabel jbl1;

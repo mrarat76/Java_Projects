@@ -15,9 +15,12 @@ import javax.swing.JPanel;
  *
  * @author mehdiarat
  */
+
+// bİNGO NCOUNT DEĞİŞKENİ YAP
 public class MultiLinkedList {
      NodeClass head;
      MultiLinkedList next; 
+     int bingocn;
 
     public MultiLinkedList() {
         this.head = null;

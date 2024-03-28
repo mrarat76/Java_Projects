@@ -5,6 +5,7 @@
 package com.mycompany.datastrct;
 
 import java.awt.GridLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,22 +16,38 @@ import javax.swing.JPanel;
  */
 public class PlayerCard extends javax.swing.JFrame {
 
+    public static DefaultListModel sumtmb = new DefaultListModel();
+    public static DefaultListModel sumbng = new DefaultListModel();
+    public static DefaultListModel plyrtmb = new DefaultListModel(); // Verileri üstteki iki listten alıcaz.
+    public static DefaultListModel plyrbng = new DefaultListModel();
 
-     // playerCards değişkenini GameWindow sınıfında tanımladık
-
+    // playerCards değişkenini GameWindow sınıfında tanımladık
     /**
      * Creates new form PlayerCard
      */
+    
+    private int numPlayerspl;
     public PlayerCard() {
         initComponents();
-        
+        listtotaltombala.setModel(sumtmb);
+        listtotalbingo.setModel(sumbng);
+        tombalaplayerlist.setModel(plyrtmb);
+        bingoplayerlist.setModel(plyrbng);
+
     }
     
-    public PlayerCard(int index){
+    public PlayerCard(int numpl) {
         initComponents();
-        showplayerCardsframe(index);
+        this.numPlayerspl=numpl;
+        listtotaltombala.setModel(sumtmb);
+        listtotalbingo.setModel(sumbng);
+        tombalaplayerlist.setModel(plyrtmb);
+        bingoplayerlist.setModel(plyrbng);
+         for (int i = 0; i < numPlayerspl; i++) {
+        playercombo.addItem(Integer.toString(i + 1));
     }
-    //paramettreli onstructor ekle
+
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -41,124 +58,205 @@ public class PlayerCard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel3 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        checkbox1 = new java.awt.Checkbox();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listtotaltombala = new javax.swing.JList<>();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        listtotalbingo = new javax.swing.JList<>();
+        jPanel4 = new javax.swing.JPanel();
+        jSplitPane1 = new javax.swing.JSplitPane();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tombalaplayerlist = new javax.swing.JList<>();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        bingoplayerlist = new javax.swing.JList<>();
+        playercombo = new javax.swing.JComboBox<>();
+        selectbtn = new javax.swing.JButton();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        closebtn = new javax.swing.JButton();
+
+        checkbox1.setLabel("checkbox1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel3.setLayout(new java.awt.GridLayout(3, 9));
+        listtotaltombala.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(listtotaltombala);
 
-        jLabel4.setText("jLabel4");
-        jPanel3.add(jLabel4);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(9, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
 
-        jLabel2.setText("jLabel2");
-        jPanel3.add(jLabel2);
+        jTabbedPane1.addTab("Total Tombalas", jPanel1);
 
-        jLabel3.setText("jLabel3");
-        jPanel3.add(jLabel3);
+        listtotalbingo.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane2.setViewportView(listtotalbingo);
 
-        jLabel5.setText("jLabel5");
-        jPanel3.add(jLabel5);
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 618, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(125, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 427, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(69, Short.MAX_VALUE))
+        );
 
-        jLabel1.setText("jLabel1");
-        jPanel3.add(jLabel1);
+        jTabbedPane1.addTab("Total Bingos", jPanel2);
 
-        jLabel10.setText("jLabel10");
-        jPanel3.add(jLabel10);
+        jScrollPane3.setViewportView(tombalaplayerlist);
 
-        jLabel7.setText("jLabel7");
-        jPanel3.add(jLabel7);
+        jSplitPane1.setLeftComponent(jScrollPane3);
 
-        jLabel16.setText("jLabel16");
-        jPanel3.add(jLabel16);
+        jScrollPane4.setViewportView(bingoplayerlist);
 
-        jLabel17.setText("jLabel17");
-        jPanel3.add(jLabel17);
+        jSplitPane1.setRightComponent(jScrollPane4);
 
-        jLabel22.setText("jLabel22");
-        jPanel3.add(jLabel22);
+        for (int i = 0; i < numPlayerspl; i++) {
+            playercombo.addItem(Integer.toString(i + 1));
 
-        jLabel21.setText("jLabel21");
-        jPanel3.add(jLabel21);
+        }
 
-        jLabel20.setText("jLabel20");
-        jPanel3.add(jLabel20);
+        selectbtn.setText("Select the player");
+        selectbtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectbtnActionPerformed(evt);
+            }
+        });
 
-        jLabel19.setText("jLabel19");
-        jPanel3.add(jLabel19);
+        jLabel23.setText("Tombalas");
 
-        jLabel18.setText("jLabel18");
-        jPanel3.add(jLabel18);
+        jLabel24.setText("Bingos");
 
-        jLabel15.setText("jLabel15");
-        jPanel3.add(jLabel15);
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(44, 44, 44)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(playercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(selectbtn)
+                        .addGap(56, 56, 56))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(jLabel23)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel24))
+                            .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 669, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(73, Short.MAX_VALUE))))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(59, 59, 59)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel23)
+                    .addComponent(jLabel24))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jSplitPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 355, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(playercombo, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(selectbtn))
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
 
-        jLabel14.setText("jLabel14");
-        jPanel3.add(jLabel14);
+        jTabbedPane1.addTab("Tombalas and Bingos Specific to Player", jPanel4);
 
-        jLabel13.setText("jLabel13");
-        jPanel3.add(jLabel13);
-
-        jLabel6.setText("jLabel6");
-        jPanel3.add(jLabel6);
-
-        jLabel8.setText("jLabel8");
-        jPanel3.add(jLabel8);
-
-        jLabel9.setText("jLabel9");
-        jPanel3.add(jLabel9);
-
-        jLabel11.setText("jLabel11");
-        jPanel3.add(jLabel11);
-
-        jLabel12.setText("jLabel12");
-        jPanel3.add(jLabel12);
+        closebtn.setText("Close");
+        closebtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closebtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(92, 92, 92)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(234, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(closebtn)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(88, 88, 88)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(177, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(closebtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    
-    
-    public void showplayerCardsframe(int playerIndex) {
+    private void closebtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closebtnActionPerformed
+        // TODO add your handling code here:
+        dispose();
+
+    }//GEN-LAST:event_closebtnActionPerformed
+
+    private void selectbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectbtnActionPerformed
+        // TODO add your handling code here:
+        Object selectedItemObj = playercombo.getSelectedItem();
+        if (selectedItemObj != null) { // Seçilen öğe null değilse devam et
+            String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
+            try {
+                int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
+                findplayerbng(selectedPlayer);
+                findplayertombola(selectedPlayer);// Oyuncunun kartlarını göster
+            } catch (NumberFormatException e) {
+                // Seçilen öğe Integer'a dönüştürülemediği için hata oluştu
+                // Bu durumda bir hata mesajı gösterebilir veya uygun bir işlem yapabilirsiniz
+                System.err.println("Hata: Seçilen öğe bir sayıya dönüştürülemedi!");
+            }
+        } else {
+            // Seçilen öğe null ise bir işlem yapma veya hata mesajı gösterme
+            System.err.println("Hata: Bir öğe seçilmedi!");
+        }
+    }//GEN-LAST:event_selectbtnActionPerformed
+
+    /* public void showplayerCardsframe(int playerIndex) {
     JFrame frame = new JFrame();
     frame.setTitle("Player " + playerIndex + "'s Cards");
     frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -196,9 +294,8 @@ public class PlayerCard extends javax.swing.JFrame {
     frame.pack(); // Frame boyutunu ayarla
     frame.setVisible(true); // Frame'i görünür yap
 }
-
-    
-    /*public void showplayerCardsframe (int playerIndex){
+     */
+ /*public void showplayerCardsframe (int playerIndex){
         
               
 
@@ -224,10 +321,6 @@ public class PlayerCard extends javax.swing.JFrame {
         
 
     }*/
-    
-        
-   
-    
     /**
      * @param args the command line arguments
      */
@@ -264,28 +357,56 @@ public class PlayerCard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JList<String> bingoplayerlist;
+    private java.awt.Checkbox checkbox1;
+    private javax.swing.JButton closebtn;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JList<String> listtotalbingo;
+    private javax.swing.JList<String> listtotaltombala;
+    private javax.swing.JComboBox<String> playercombo;
+    private javax.swing.JButton selectbtn;
+    private javax.swing.JList<String> tombalaplayerlist;
     // End of variables declaration//GEN-END:variables
+
+    private void findplayerbng(int selectedPlayer) {
+
+        for (int i = 0; i < sumbng.size(); i++) {
+            String element = (String) sumbng.getElementAt(i);
+            if (element.startsWith("Player" + selectedPlayer)) {
+                boolean exists = false;
+                // Aynı index'e sahip öğe zaten plyrbng'de var mı kontrol ediyoruz
+                for (int j = 0; j < plyrbng.size(); j++) {
+                    String plyrbngElement = (String) plyrbng.getElementAt(j);
+                    if (plyrbngElement.startsWith("Player" + selectedPlayer)) {
+                        exists = true;
+                        plyrbng.set(j, element); // Eğer varsa güncelleme yap
+                        break;
+                    }
+                }
+                if (!exists) {
+                    plyrbng.addElement(element); // Eğer yoksa ekleme yap
+                }
+            }
+        }
+    }
+
+    private void findplayertombola(int selectedPlayer) {
+        for (int i = 0; i < sumtmb.size(); i++) {
+            Object object = sumtmb.getElementAt(i);
+            String element = String.valueOf(object);
+            if (element.startsWith("Player" + selectedPlayer)) {
+                plyrbng.addElement(element);
+            }
+        }
+    }
 }
