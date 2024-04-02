@@ -47,7 +47,7 @@ public class TombolaGame {
         while (selectedNumbers.size() < 15) {
             int randomNumber = random.nextInt(90) + 1;
             if (!selectedNumbers.contains(randomNumber)) {
-                card.add(randomNumber);
+              //  card.add(randomNumber);
                 selectedNumbers.add(randomNumber);
             }
         }
@@ -58,7 +58,7 @@ public class TombolaGame {
             int index = random.nextInt(15);
             NodeClass current = card.head;
             while (index > 0) {
-                current = current.down;
+                current = current.next;
                 index--;
             }
             if (current.data != -1) {

@@ -4,18 +4,29 @@
  */
 package com.mycompany.datastrct;
 
+import javax.swing.JLabel;
+
 /**
  *
  * @author mehdiarat
  */
 public class NodeClass {
     int data;
+    NodeClass nextcard;
     NodeClass next;
     NodeClass down;
+    JLabel labe;
 
     public NodeClass(int data) {
         this.data = data;
+        this.nextcard = null;
         this.next = null;
-        this.down = null;
+      
     }
+    
+    public NodeClass(JLabel labe){
+        this.labe=labe;
+        this.next=null;
+    }
+    
 }

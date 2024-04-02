@@ -332,7 +332,7 @@ public class PlayerCard extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows ".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -394,6 +394,7 @@ public class PlayerCard extends javax.swing.JFrame {
                     }
                 }
                 if (!exists) {
+                    plyrbng.clear();
                     plyrbng.addElement(element); // Eğer yoksa ekleme yap
                 }
             }
@@ -401,11 +402,14 @@ public class PlayerCard extends javax.swing.JFrame {
     }
 
     private void findplayertombola(int selectedPlayer) {
+        plyrtmb.clear();
+        
         for (int i = 0; i < sumtmb.size(); i++) {
             Object object = sumtmb.getElementAt(i);
             String element = String.valueOf(object);
-            if (element.startsWith("Player" + selectedPlayer)) {
-                plyrbng.addElement(element);
+           
+            if (element.startsWith("Player " + selectedPlayer)) {
+                plyrtmb.addElement(element);
             }
         }
     }

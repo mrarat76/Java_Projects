@@ -57,24 +57,40 @@
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                              <Component id="numberLabel" min="-2" pref="139" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="stopButton" min="-2" max="-2" attributes="0"/>
+                                  <Component id="startButton" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButton6" min="-2" pref="168" max="-2" attributes="0"/>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Component id="jButton7" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="jLabel2" min="-2" pref="195" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="jLabel2" min="-2" pref="195" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                           </Group>
                       </Group>
                   </Group>
               </Group>
-              <EmptySpace pref="93" max="32767" attributes="0"/>
+              <EmptySpace pref="39" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -98,7 +114,12 @@
                           <Component id="jLabel2" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jSpinner1" alignment="3" min="-2" pref="34" max="-2" attributes="0"/>
                           <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -107,6 +128,13 @@
                       <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                       <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="numberLabel" alignment="3" min="-2" pref="49" max="-2" attributes="0"/>
+                          <Component id="startButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="stopButton" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="47" max="32767" attributes="0"/>
@@ -151,137 +179,137 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jbl1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel9"/>
+            <Property name="text" type="java.lang.String" value="jbl1"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel11"/>
+            <Property name="text" type="java.lang.String" value="jbl2"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel17"/>
+            <Property name="text" type="java.lang.String" value="jbl3"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel22"/>
+            <Property name="text" type="java.lang.String" value="jbl4"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel24"/>
+            <Property name="text" type="java.lang.String" value="jbl5"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel28"/>
+            <Property name="text" type="java.lang.String" value="jbl6"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl7">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel27"/>
+            <Property name="text" type="java.lang.String" value="jLabel7"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel26"/>
+            <Property name="text" type="java.lang.String" value="jbl8"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl9">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel20"/>
+            <Property name="text" type="java.lang.String" value="jbl9"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl10">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel21"/>
+            <Property name="text" type="java.lang.String" value="jbl10"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl11">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel19"/>
+            <Property name="text" type="java.lang.String" value="jbl11"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl12">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel18"/>
+            <Property name="text" type="java.lang.String" value="jbl12"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl13">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel29"/>
+            <Property name="text" type="java.lang.String" value="jbl13"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl14">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel16"/>
+            <Property name="text" type="java.lang.String" value="jbl14"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl15">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel31"/>
+            <Property name="text" type="java.lang.String" value="jbl15"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl16">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel30"/>
+            <Property name="text" type="java.lang.String" value="jbl16"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl17">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel14"/>
+            <Property name="text" type="java.lang.String" value="jbl17"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl18">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel15"/>
+            <Property name="text" type="java.lang.String" value="jbl18"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl19">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel8"/>
+            <Property name="text" type="java.lang.String" value="jbl19"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl20">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel7"/>
+            <Property name="text" type="java.lang.String" value="jbl20"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl21">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel6"/>
+            <Property name="text" type="java.lang.String" value="jbl21"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl22">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel3"/>
+            <Property name="text" type="java.lang.String" value="jbl22"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl23">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel2"/>
+            <Property name="text" type="java.lang.String" value="jbl23"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl24">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel4"/>
+            <Property name="text" type="java.lang.String" value="jbl24"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl25">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel13"/>
+            <Property name="text" type="java.lang.String" value="jbl25"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl26">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel12"/>
+            <Property name="text" type="java.lang.String" value="jbl26"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jbl27">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jLabel10"/>
+            <Property name="text" type="java.lang.String" value="jbl27"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -343,6 +371,43 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="numberLabel">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Slot Label"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="startButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Run"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="stopButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Collapse"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopButtonActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton6">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Manual Button"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="jButton7">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Manual Number Button"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

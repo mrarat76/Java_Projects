@@ -20,25 +20,86 @@ import javax.swing.JPanel;
 public class MultiLinkedList {
      NodeClass head;
      MultiLinkedList next; 
-     int bingocn;
+     //int bingocn;
 
-    public MultiLinkedList() {
+    
+     
+     
+     /* public MultiLinkedList() {
+        // 3x9 boyutunda boş bir kart oluştur
+        head = new NodeClass(-1);  // Başlangıç düğümü
+        NodeClass currentRow = head;
+        for (int i = 0; i < 3; i++) {
+            NodeClass current = currentRow;
+            for (int j = 0; j < 9; j++) {
+                current.next = new NodeClass(-1);
+                current = current.next;
+            }
+            if (i < 2) {
+                currentRow.down = new NodeClass(-1);
+                currentRow = currentRow.down;
+            }
+        }
+    }*/
+     
+     
+     public MultiLinkedList() {
         this.head = null;
     }
 
-    // Method to add a new number to the linked list
-    public void add(int data) {
-        NodeClass newNode = new NodeClass(data);
+ 
+    public void addlbl(JLabel label) {
+        NodeClass newNode = new NodeClass(label);
         if (head == null) {
             head = newNode;
             return;
         }
         NodeClass current = head;
-        while (current.down != null) {
-            current = current.down;
+        while (current.next != null) {
+            current = current.next;
         }
+        current.next = newNode;
+    }
+    
+    
+    
+    
+    public void add(int data) {
+    NodeClass newNode = new NodeClass(data);
+    if (head == null) {
+        head = newNode;
+        return;
+    }
+    NodeClass current = head;
+    while (current.next != null) {
+        current = current.next;
+    }
+    current.next = newNode;
+
+    // Yeni eklenen düğümün down bağlantısını ayarla
+    if (current.down != null) {
         current.down = newNode;
     }
+}
+
+
+      
+      
+      /*public void add(int row, int col, int data) {
+        // Belirli bir konuma veri eklemek için
+        NodeClass current = head;
+        for (int i = 0; i < row; i++) {
+            current = current.down;
+        }
+        for (int j = 0; j < col; j++) {
+            current = current.next;
+        }
+        current.data = data;
+    }*/
+    
+    
+    
+    
 
     // Method to remove a number from the linked list
     public void remove(int data) {
@@ -48,14 +109,14 @@ public class MultiLinkedList {
         NodeClass prev = null;
         while (current != null && current.data != data) {
             prev = current;
-            current = current.down;
+            current = current.next;
         }
         if (current == null)
             return;
         if (prev == null) {
             head = current.next;
         } else {
-            prev.down = current.next;
+            prev.next = current.next;
         }
     }
 
@@ -65,7 +126,7 @@ public class MultiLinkedList {
         while (current != null) {
             if (current.data == data)
                 return true;
-            current = current.down;
+            current = current.next;
         }
         return false;
     }
@@ -80,7 +141,7 @@ public class MultiLinkedList {
             } else {
                 System.out.print(current.data + " ");
             }
-            current = current.down;
+            current = current.next;
         }
         System.out.println();
     }
@@ -103,10 +164,10 @@ public void appendList(MultiLinkedList list) {
         if (list.head == null)
             return;
         NodeClass current = head;
-        while (current.down != null) {
-            current = current.down;
+        while (current.next != null) {
+            current = current.next;
         }
-        current.down = list.head;
+        current.next = list.head;
     }
 
     public boolean isWinningCard() {
@@ -114,7 +175,7 @@ public void appendList(MultiLinkedList list) {
     int count = 0;
     while (current != null) {
         count++;
-        current = current.down;
+        current = current.next;
     }
     return count == 15;
 }

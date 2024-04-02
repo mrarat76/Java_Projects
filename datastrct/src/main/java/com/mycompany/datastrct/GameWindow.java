@@ -10,32 +10,44 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Collections;
+
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.TimerTask;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SpinnerListModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.Timer;
+//import javax.swing.Timer;
+import java.util.Timer;
 
 /**
  *
  * @author mehdiarat
  */
-// Çinko check için iki tane for döngüsü açtır, o for döngülerinde rowlar da her 9 elementte bir kontrol ettirsin eğer örneğin ilk 9 elemntin hepsi -1 ise countu bir artır veya ikincisi öyleyse artır.
-// Bunu nerede yapacağız şöyle yapacağız, yeni bir frameda list açtır ve listte her bir oyuncunun çinko sayısı görülsün, listede ilk kim 3 çinko yaparsa o kazansın.
-// Ayrıca spinnerdan eleman sildir.
 // Sortlama yapılacak kartlarda.
-// Sayılar eşleşince silme boyat.
+// overload ile matris girişi ve hocanın istediği randoma göre kart çekme
+// bug temizliği
+// slot için arrayi kaldır linkedlist kullan
+//print ettiriken kayma yaşıyoruz collapse metoduna bak
 public class GameWindow extends javax.swing.JFrame {
 
     private static int numPlayers;
     private Timer timer;
+    private ArrayList<Integer> sayilar;
+    private ArrayList<Integer> mannum;
 
+    MultiLinkedList manualcard = new MultiLinkedList();
+    MultiLinkedList kese = new MultiLinkedList();
+    MultiLinkedList linkarr = new MultiLinkedList();
+    MultiLinkedList link2arr = new MultiLinkedList();
+    MultiLinkedList linkmanual = new MultiLinkedList();
+    int count4 = 0;
+    int count5 = 0;
     public static MultiLinkedList playerCards; // playerCards değişkenini GameWindow sınıfında tanımladık
 
     /**
@@ -49,7 +61,20 @@ public class GameWindow extends javax.swing.JFrame {
         this.numPlayers = numPlayers;
         initComponents();
         playerCards = generatePlayerCards(numPlayers);
+        generatatable();
+        generatatableman();
+        generatekese();
+        generateRandomNumbers();
+
         checkBingoAndUpdateCount(numPlayers);
+        sayilar = new ArrayList<>();
+        for (int i = 0; i < 90; i++) {
+            sayilar.add(i);
+        }
+        mannum = new ArrayList<>();
+        for (int i = 0; i < 90; i++) {
+            mannum.add(i);
+        }
 
     }
 
@@ -102,6 +127,11 @@ public class GameWindow extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jButton5 = new javax.swing.JButton();
+        numberLabel = new javax.swing.JLabel();
+        startButton = new javax.swing.JButton();
+        stopButton = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton7 = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -126,85 +156,85 @@ public class GameWindow extends javax.swing.JFrame {
 
         jPanel1.setLayout(new java.awt.GridLayout(3, 9));
 
-        jbl1.setText("jLabel9");
+        jbl1.setText("jbl1");
         jPanel1.add(jbl1);
 
-        jbl2.setText("jLabel11");
+        jbl2.setText("jbl2");
         jPanel1.add(jbl2);
 
-        jbl3.setText("jLabel17");
+        jbl3.setText("jbl3");
         jPanel1.add(jbl3);
 
-        jbl4.setText("jLabel22");
+        jbl4.setText("jbl4");
         jPanel1.add(jbl4);
 
-        jbl5.setText("jLabel24");
+        jbl5.setText("jbl5");
         jPanel1.add(jbl5);
 
-        jbl6.setText("jLabel28");
+        jbl6.setText("jbl6");
         jPanel1.add(jbl6);
 
-        jbl7.setText("jLabel27");
+        jbl7.setText("jLabel7");
         jPanel1.add(jbl7);
 
-        jbl8.setText("jLabel26");
+        jbl8.setText("jbl8");
         jPanel1.add(jbl8);
 
-        jbl9.setText("jLabel20");
+        jbl9.setText("jbl9");
         jPanel1.add(jbl9);
 
-        jbl10.setText("jLabel21");
+        jbl10.setText("jbl10");
         jPanel1.add(jbl10);
 
-        jbl11.setText("jLabel19");
+        jbl11.setText("jbl11");
         jPanel1.add(jbl11);
 
-        jbl12.setText("jLabel18");
+        jbl12.setText("jbl12");
         jPanel1.add(jbl12);
 
-        jbl13.setText("jLabel29");
+        jbl13.setText("jbl13");
         jPanel1.add(jbl13);
 
-        jbl14.setText("jLabel16");
+        jbl14.setText("jbl14");
         jPanel1.add(jbl14);
 
-        jbl15.setText("jLabel31");
+        jbl15.setText("jbl15");
         jPanel1.add(jbl15);
 
-        jbl16.setText("jLabel30");
+        jbl16.setText("jbl16");
         jPanel1.add(jbl16);
 
-        jbl17.setText("jLabel14");
+        jbl17.setText("jbl17");
         jPanel1.add(jbl17);
 
-        jbl18.setText("jLabel15");
+        jbl18.setText("jbl18");
         jPanel1.add(jbl18);
 
-        jbl19.setText("jLabel8");
+        jbl19.setText("jbl19");
         jPanel1.add(jbl19);
 
-        jbl20.setText("jLabel7");
+        jbl20.setText("jbl20");
         jPanel1.add(jbl20);
 
-        jbl21.setText("jLabel6");
+        jbl21.setText("jbl21");
         jPanel1.add(jbl21);
 
-        jbl22.setText("jLabel3");
+        jbl22.setText("jbl22");
         jPanel1.add(jbl22);
 
-        jbl23.setText("jLabel2");
+        jbl23.setText("jbl23");
         jPanel1.add(jbl23);
 
-        jbl24.setText("jLabel4");
+        jbl24.setText("jbl24");
         jPanel1.add(jbl24);
 
-        jbl25.setText("jLabel13");
+        jbl25.setText("jbl25");
         jPanel1.add(jbl25);
 
-        jbl26.setText("jLabel12");
+        jbl26.setText("jbl26");
         jPanel1.add(jbl26);
 
-        jbl27.setText("jLabel10");
+        jbl27.setText("jbl27");
         jPanel1.add(jbl27);
 
         jSpinner1.setBounds(new java.awt.Rectangle(0, 0, 90, 1));
@@ -245,6 +275,36 @@ public class GameWindow extends javax.swing.JFrame {
             }
         });
 
+        numberLabel.setText("Slot Label");
+
+        startButton.setText("Run");
+        startButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startButtonActionPerformed(evt);
+            }
+        });
+
+        stopButton.setText("Collapse");
+        stopButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stopButtonActionPerformed(evt);
+            }
+        });
+
+        jButton6.setText("Manual Button");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
+
+        jButton7.setText("Manual Number Button");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -272,17 +332,29 @@ public class GameWindow extends javax.swing.JFrame {
                                     .addComponent(jButton3)
                                     .addComponent(jButton5)))
                             .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(numberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(stopButton)
+                                    .addComponent(startButton)))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel5))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(jLabel3)))))))
-                .addContainerGap(93, Short.MAX_VALUE))
+                                        .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton7))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel4)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel5))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(31, 31, 31)
+                                            .addComponent(jLabel3))))))))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,14 +373,24 @@ public class GameWindow extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel3))
-                        .addGap(144, 144, 144)
+                        .addGap(77, 77, 77)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton6)
+                            .addComponent(jButton7))
+                        .addGap(44, 44, 44)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton3)
                         .addGap(33, 33, 33)
-                        .addComponent(jButton5)))
+                        .addComponent(jButton5)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(numberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(startButton))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(stopButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
@@ -329,8 +411,33 @@ public class GameWindow extends javax.swing.JFrame {
         if (selectedItemObj != null) { // Seçilen öğe null değilse devam et
             String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
             try {
-                int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
-                showPlayerCards(selectedPlayer); // Oyuncunun kartlarını göster
+
+                int selectedPlayer = Integer.parseInt(selectedItem);
+                showPlayerCards(selectedPlayer);
+                /* if (count4 == 0 || count5 == 0) {
+                    showPlayerCards(selectedPlayer);
+                    JOptionPane.showMessageDialog(rootPane, "PLEASE SELECT OTHER PLAYER TO CREATE THE OTHER PLAYERS CARD TO START YOUR GAME WITHOUT ERROR");
+                    if (selectedPlayer == 1) {
+                        ++count4;
+                    }
+
+                    if (selectedPlayer == 2) {
+                        ++count5;
+                    }
+                } else {
+                    if (selectedPlayer == 1) {
+                        JOptionPane.showMessageDialog(rootPane, "Player 1 turn.");
+                        printarraytolabel(arr4);
+                    }
+
+                    if (selectedPlayer == 2) {
+                        JOptionPane.showMessageDialog(rootPane, "Player 2 turn.");
+                        printarraytolabel(arr5);
+                    }
+                }
+                 */
+// String'i Integer'a dönüştür
+                // Oyuncunun kartlarını göster
             } catch (NumberFormatException e) {
                 // Seçilen öğe Integer'a dönüştürülemediği için hata oluştu
                 // Bu durumda bir hata mesajı gösterebilir veya uygun bir işlem yapabilirsiniz
@@ -344,7 +451,7 @@ public class GameWindow extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        startSpinner();
+        //  startSpinner();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -354,7 +461,7 @@ public class GameWindow extends javax.swing.JFrame {
 
         int selectedPlayer = Integer.parseInt(selectedItem); // String'i Integer'a dönüştür
 
-        stopSpinner4(selectedPlayer);
+        //stopSpinner4(selectedPlayer);
         checkBingoAndUpdateCount(selectedPlayer);
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -371,8 +478,134 @@ public class GameWindow extends javax.swing.JFrame {
         PlayerCard pl = new PlayerCard(numPlayers);
         pl.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
+        // TODO add your handling code here:
+        start();
+
+    }//GEN-LAST:event_startButtonActionPerformed
+
+    private void stopButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopButtonActionPerformed
+        // TODO add your handling code here:
+        Object selectedItemObj = jComboBox1.getSelectedItem();
+        String selectedItem = selectedItemObj.toString(); // Seçilen öğeyi String olarak al
+
+        int selectedPlayer = Integer.parseInt(selectedItem);
+        stop(selectedPlayer);
+        checkBingoAndUpdateCount(selectedPlayer);
+
+    }//GEN-LAST:event_stopButtonActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        // TODO add your handling code here:
+        int[][] card1 = {
+            {5, -1, 22, -1, 45, -1, 60, 73, -1},
+            {-1, 10, -1, 31, 47, 58, 68, -1, -1},
+            {-1, 17, 26, 38, -1, -1, -1, 79, 86}
+        };
+        matrixprinttolinkedlist(card1);
+        showmatrixcard();
+
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        // TODO add your handling code here:
+     
+      checktombforman();
+      checkbng();
+
+    }//GEN-LAST:event_jButton7ActionPerformed
+
+    /*private void showPlayerCards(int playerIndex) {
+    MultiLinkedList currentList = playerCards;
+    for (int i = 1; i <= playerIndex; i++) {
+        if (currentList == null) {
+            System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+            return;
+        }
+        currentList = currentList.next;
+    }
+
+    if (currentList == null) {
+        System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+        return;
+    }
+
+    NodeClass row = currentList.head.down;  // İlk satıra git
+    int labelIndex = 1;
+
+    while (row != null) {
+        NodeClass col = row.next;  // İlk sütuna git
+        while (col != null) {
+            JLabel label = findLabelByIndex(labelIndex++);
+            if (label != null) {
+                if (col.data == -1) {
+                    label.setText("X");
+                    label.setForeground(Color.BLACK);
+                    label.setBackground(Color.WHITE);
+                } else if (col.data == -2) {
+                    label.setText("T");
+                    label.setForeground(Color.RED);
+                } else {
+                    label.setText(Integer.toString(col.data));
+                    label.setForeground(Color.BLACK);
+                    label.setBackground(Color.WHITE);
+                }
+            } else {
+                System.out.println("Hata: Belirtilen indekse sahip bir JLabel bulunamadı.");
+            }
+            col = col.next;  // Bir sonraki sütuna git
+        }
+        row = row.down;  // Bir sonraki satıra git
+    }
+}*/
+ /*private void showPlayerCards2(int playerIndex) {
+        MultiLinkedList currentList = playerCards;
+        for (int i = 1; i <= playerIndex; i++) {
+            if (currentList == null) {
+                System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+                return;
+            }
+            currentList = currentList.next;
+        }
+
+        if (currentList == null) {
+            System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+            return;
+        }
+
+        NodeClass current = currentList.head;
+        int row = 0;
+
+        while (current != null) {
+            NodeClass temp = current;
+            while (temp != null) {
+                int index = 1;
+                JLabel label = findLabelByIndex(index++); // 3x9'luk ızgarada hangi indekste olduğumuzu hesapla
+                if (label != null) {
+                    if (temp.data == -1) {
+                        label.setText("X");
+                        label.setForeground(Color.BLACK);
+                        label.setBackground(Color.WHITE); // Arka plan rengi beyaz
+                    } else if (temp.data == -2) {
+                        label.setText("T");
+                        label.setForeground(Color.RED); // Kırmızı renk
+                    } else {
+                        label.setText(Integer.toString(temp.data));
+                        label.setForeground(Color.BLACK);
+                        label.setBackground(Color.WHITE);
+                    }
+                } else {
+                    //System.out.println("Hata: Belirtilen indekse sahip bir JLabel bulunamadı.");
+                }
+                temp = temp.down; // Aşağıya doğru olan bağlantıyı takip et
+            }
+            row++;
+            current = current.next; // Sağa doğru olan bağlantıyı takip et
+        }
+    }*/
     private void showPlayerCards(int playerIndex) {
-        /*  JFrame playerFrame = new JFrame();
+        /*   JFrame playerFrame = new JFrame();
         playerFrame.setTitle("Player " + playerIndex + "'s Cards");
         playerFrame.setSize(300, 200);
         playerFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -397,10 +630,11 @@ public class GameWindow extends javax.swing.JFrame {
         // Bu listenin içeriğini yazdır
         currentList.printList(playerFrame);
         
-         */
- /*PlayerCard pla = new PlayerCard(playerIndex);
+         
+ PlayerCard pla = new PlayerCard(playerIndex);
         pla.setVisible(true);*/
 
+        clearAllLabels();
         MultiLinkedList currentList = playerCards;
         for (int i = 1; i <= playerIndex; i++) {
             if (currentList == null) {
@@ -416,17 +650,21 @@ public class GameWindow extends javax.swing.JFrame {
         }
 
         NodeClass current = currentList.head;
-        int index = 1;
+        int index = 0;
+        //markaRandom();
+        showXcard(playerIndex);
 
         while (current != null) {
-            JLabel label = findLabelByIndex(index++);
-            if (label != null) {
-                if (current.data == -1) {
+
+            JLabel label = findLabelByIndex(++index);
+
+            if (!"X".equals(label.getText())) {
+                /*if (current.data == -1) {
                     label.setText("X");
                     label.setForeground(Color.BLACK);
                     label.setBackground(Color.WHITE); // Arka plan rengi beyaz
 
-                } else if (current.data == -2) {
+                } else*/ if (current.data == -2) {
                     label.setText("T");
                     label.setForeground(Color.RED); // Kırmızı renk
 
@@ -435,10 +673,16 @@ public class GameWindow extends javax.swing.JFrame {
                     label.setForeground(Color.BLACK);
                     label.setBackground(Color.WHITE);
                 }
+                current = current.next;
+
             } else {
-                System.out.println("Hata: Belirtilen indekse sahip bir JLabel bulunamadı.");
+                System.out.println("Blok var bir sonraki label kontrolü sağlanıp ekleme yapılacak.");
+
             }
-            current = current.down;
+
+            /// Tekrardan findlabelyaptırt ve if bloğu açtır iki adet arraye indexlerine göre elemanlarını eklesin akabinde biz bunu yazdırıcaz.Ya da multidimensional arraylist yaptırt kullanıcı sayısı arttıkça grupları artırsın. Selecte bastığımızda ise o arrayin elemanlarını istenilene göre yazdırsın.
+            /// Check bingo metodunda arraye ekleme yaptırt eğer array[i] gelen dataya eşitse onu T yap
+            /// Selecte iki tane index adlı değişken yaptır eğer 1 seçildiyse 1 kere veya 2 seçildiyse 1 kere direk printi çalıştırsın
         }
 
         /* 
@@ -465,16 +709,72 @@ public class GameWindow extends javax.swing.JFrame {
     jLabel3.setText(String.valueOf(currentList.bingocn));*/
     }
 
-    private void startSpinner() {
+    private void clearAllLabels() {
+        for (int i = 1; i <= 27; i++) {
+            JLabel label = findLabelByIndex(i);
+            if (label != null) {
+                label.setText("");
+            }
+        }
+    }
+
+    /*private void showPlayerCards3(int playerIndex) {
+        MultiLinkedList currentList = playerCards;
+        int currentIndex = 1; // Initialize index counter
+
+        while (currentList != null && currentIndex <= playerIndex) {
+            if (currentIndex == playerIndex) { // Check if the current index matches the selected player index
+                NodeClass current = currentList.head;
+                int labelIndex = 1;
+
+                while (current != null && labelIndex <= 27) { // Iterate over JLabels
+                    JLabel label = findLabelByIndex(labelIndex);
+
+                    if (label != null && !"X".equals(label.getText())) {
+                        if (current.data == -2) {
+                            label.setText("T");
+                            label.setForeground(Color.RED); // Set text and color for 'T' cards
+                        } else {
+                            label.setText(Integer.toString(current.data)); // Set text for other cards
+                            label.setForeground(Color.BLACK);
+                            label.setBackground(Color.WHITE);
+                        }
+                        current = current.next; // Move to the next node
+                    } else {
+                        System.out.println("Hata: Belirtilen indekse sahip bir JLabel bulunamadı veya blok var.");
+                    }
+                    labelIndex++; // Increment label index
+                }
+                return; // Exit the method once the player cards are displayed
+            }
+            currentList = currentList.next; // Move to the next player
+            currentIndex++; // Increment current index
+        }
+
+        System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı."); // Player index not found
+    }*/
+
+ /* private JLabel findEmptyLabel() {
+        for (int i = 1; i <= 27; i++) {
+            JLabel label = findLabelByIndex(i);
+            if (label != null && label.getText() != null && label.getText().isEmpty()) {
+                return label;
+            }
+        }
+        return null;
+
+    }*/
+
+ /*private void startSpinner() {
         timer = new Timer(100, new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 jSpinner1.setValue((int) (Math.random() * 91)); // Rasgele sayı
             }
         });
         timer.start();
-    }
+    }*/
 
-    private void stopSpinner() {
+ /* private void stopSpinner() {
         if (timer != null) {
             timer.stop();
             int value = (int) jSpinner1.getValue();
@@ -490,9 +790,9 @@ public class GameWindow extends javax.swing.JFrame {
             model = new SpinnerListModel(list);
             jSpinner1.setModel(model);
         }
-    }
+    }*/
 
-    private void stopSpinner2() {
+ /*private void stopSpinner2() {
         if (timer != null) {
             timer.stop();
             int value = (int) jSpinner1.getValue();
@@ -514,9 +814,9 @@ public class GameWindow extends javax.swing.JFrame {
             model = new SpinnerNumberModel(value, min, max, 1);
             jSpinner1.setModel(model);
         }
-    }
+    }*/
 
-    private void stopSpinner3() {
+ /* private void stopSpinner3() {
         if (timer != null) {
             timer.stop();
             int value = (int) jSpinner1.getValue();
@@ -540,91 +840,7 @@ public class GameWindow extends javax.swing.JFrame {
             model = new SpinnerNumberModel(value, min, max, 1);
             jSpinner1.setModel(model);
         }
-    }
-
-    private void stopSpinner4(int playerIndex) {
-        if (timer != null) {
-            timer.stop();
-            int value = (int) jSpinner1.getValue();
-            System.out.println("Stopped at: " + value);
-
-            SpinnerNumberModel model = (SpinnerNumberModel) jSpinner1.getModel();
-            Comparable min = model.getMinimum();
-            Comparable minValueComparable = model.getMinimum();
-            int minValue = minValueComparable != null ? (int) minValueComparable : 0;
-            Comparable max = model.getMaximum();
-            List<Integer> list1 = new ArrayList<>();
-
-            if (min != null) { // Check if min is not null
-                // You need to iterate through values of Comparable type.
-                // Since we're dealing with integers, it's safe to assume Comparable is Integer.
-                for (Comparable i = min; i.compareTo(max) <= 0; i = (Integer) i + 1) {
-                    if (i.compareTo(value) != 0) { // compareTo() compares the values
-                        list1.add((Integer) i);
-                    }
-                }
-            }
-
-            // Seçilen değeri listeden çıkar
-            list1.remove(Integer.valueOf(value));
-
-            // Yeni SpinnerNumberModel'i güncelle
-            model = new SpinnerNumberModel(minValue, min, max, 1);
-            jSpinner1.setModel(model);
-
-            MultiLinkedList currentList = playerCards;
-            for (int i = 1; i <= playerIndex; i++) {
-                if (currentList == null) {
-                    System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
-                    return;
-                }
-                currentList = currentList.next;
-            }
-
-            NodeClass current = currentList.head;
-            int index = 1;
-            while (current != null) {
-                if (current.data == value) {
-                    JOptionPane.showMessageDialog(null, "TOMBOLA!", "Great!", JOptionPane.INFORMATION_MESSAGE);
-                    sumtmb.addElement("Player" + playerIndex + ", Tombola Number =" + value);
-                    JLabel label = findLabelByIndex(index);
-                    label.setText("T");
-                    label.setForeground(Color.red);
-                    current.data = -2;
-
-                } else {
-                    current = current.down;
-                    ++index;
-                }
-
-                /*     
-    int ch= 0;
-    while(current!= null){
-        if(current.data==-1 ){
-            ch++;
-            current =current.down;
-        } else{
-            current = current.down;
-            
-        }
-        
-    }
-    
-    if(ch % 9== 0){
-        if(ch !=0){
-            JOptionPane.showMessageDialog(null, "Bingoo!", "Great!", JOptionPane.INFORMATION_MESSAGE); 
-                 currentList.bingocn ++;
-        }
-                 
-
-    }
-    jLabel3.setText(String.valueOf(currentList.bingocn));*/
-                // Çinkolar!!!!!!!!
-            }
-
-        }
-    }
-
+    }*/
     public void checkBingoAndUpdateCount(int playerIndex) {
 
         MultiLinkedList currentList = playerCards;
@@ -642,13 +858,13 @@ public class GameWindow extends javax.swing.JFrame {
         int sumtomb = 0;
         for (int row = 0; row < 3; row++) {
             int tombala = 0;
-            for (int col = 0; col < 9; col++) {
+            for (int col = 0; col < 5; col++) {
                 if (current.data == -2) {
                     tombala++;
                     sumtomb++;
-                    current = current.down;
+                    current = current.next;
                 } else {
-                    current = current.down;
+                    current = current.next;
                 }
 
             }
@@ -673,9 +889,9 @@ public class GameWindow extends javax.swing.JFrame {
 
         // Eğer varsa değeri güncelle, yoksa yeni bir öğe ekle
         if (found) {
-            sumbng.set(index, "Player" + playerIndex + ", Tombola Number =" + cinko);
+            sumbng.set(index, "Player" + playerIndex + ", Bingo Count =" + cinko);
         } else {
-            sumbng.addElement("Player" + playerIndex + ", Tombola Number =" + cinko);
+            sumbng.addElement("Player" + playerIndex + ", Bingo Count =" + cinko);
         }
 
         /*NodeClass current = playerCards.head;
@@ -758,6 +974,73 @@ public class GameWindow extends javax.swing.JFrame {
         };
     }
 
+    /*public void markRandomLabels() {
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < 27; i++) {
+            indices.add(i+1);
+        }
+        Collections.shuffle(indices);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                JLabel label = findLabelByIndex(indices.get(i * 3 + j));
+                if (label != null) {
+                    label.setText("X");
+                }
+            }
+        }
+    }*/
+    public void markRandomLabels() {
+        List<Integer> indices = new ArrayList<>();
+        for (int i = 0; i < 27; i++) {
+            indices.add(i + 1); // Indeksleri 1'den 27'ye kadar ekle
+        }
+        Collections.shuffle(indices);
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 4; j++) {
+                int index = 0;
+                if (index < indices.size()) {
+                    JLabel label = findLabelByIndex(indices.get(index)); // Doğru indeksi bulmak için i * 4 + j kullan
+                    if (label != null) {
+                        label.setText("X");
+                    }
+                }
+            }
+        }
+    }
+
+    private void markaRandom(List<JLabel> labels) {
+        Random random = new Random();
+
+        List<JLabel> copyLabels = new ArrayList<>(labels); // Orijinal listeyi kopyala
+
+        for (int i = 0; i < 4; i++) {
+            int randomIndex = random.nextInt(copyLabels.size());
+            JLabel label = copyLabels.get(randomIndex);
+            label.setText("X");
+            copyLabels.remove(randomIndex); // Kopya listeyi güncelle, orijinaline dokunma
+        }
+    }
+
+    public void markRandomLabelsInGroups() {
+        List<List<JLabel>> groups = new ArrayList<>();
+        for (int i = 1; i <= 27; i += 9) {
+            List<JLabel> group = new ArrayList<>();
+            for (int j = i; j < i + 9; j++) {
+                group.add(findLabelByIndex(j));
+            }
+            groups.add(group);
+        }
+
+        for (List<JLabel> group : groups) {
+            markaRandom(group);
+        }
+
+        // Grupları sıfırla
+        groups.clear();
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -769,7 +1052,7 @@ public class GameWindow extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -804,14 +1087,20 @@ public class GameWindow extends javax.swing.JFrame {
 
             // 9x3 kart oluşturma
             for (int row = 0; row < 3; row++) {
-                for (int col = 0; col < 9; col++) {
-                    int randomNumber = random.nextInt(90) + 1;
+                for (int col = 0; col < 5; col++) {
+                    int startNumber = col * 10 + 1; // Sütun başlangıç numarası
+                    int randomNumber;
+                    //int randomNumber = random.nextInt(90) + 1;
+                    do {
+                        randomNumber = startNumber + random.nextInt(9);
+                    } while (card.contains(randomNumber));
+
                     card.add(randomNumber);
                 }
             }
 
             // Her satırda 4 düğümü -1 olarak işaretle
-            for (int row = 0; row < 3; row++) {
+            /* for (int row = 0; row < 3; row++) {
                 Set<Integer> markedIndexes = new HashSet<>();
                 NodeClass current = card.head;
                 int numX = 4;
@@ -821,14 +1110,13 @@ public class GameWindow extends javax.swing.JFrame {
                         markedIndexes.add(randomIndex);
                         NodeClass temp = current;
                         for (int k = 0; k < randomIndex + (row * 9); k++) {
-                            temp = temp.down;
+                            temp = temp.next;
                         }
                         temp.data = -1;
                         numX--;
                     }
                 }
-            }
-
+            }*/
             // Bağlantıları ayarla
             currentPlayer.next = card;
             currentPlayer = card;
@@ -837,6 +1125,163 @@ public class GameWindow extends javax.swing.JFrame {
         return firstPlayer;
     }
 
+    /*private MultiLinkedList generatePlayerCards(int numPlayers) {
+        MultiLinkedList firstPlayerCard = null;
+        MultiLinkedList currentPlayerCard = null;
+        Random random = new Random();
+
+        for (int i = 0; i < numPlayers; i++) {
+            MultiLinkedList card = new MultiLinkedList();
+
+            // 9x3 kartı rastgele sayılarla doldurma
+            for (int row = 0; row < 3; row++) {
+                for (int col = 0; col < 9; col++) {
+                    int randomNumber = random.nextInt(90) + 1;
+                    card.add(row, col, randomNumber);
+                }
+            }
+
+            // Her satırda rastgele 4 hücreyi işaretle
+            for (int row = 0; row < 3; row++) {
+                Set<Integer> markedIndexes = new HashSet<>();
+                while (markedIndexes.size() < 4) {
+                    int randomIndex = random.nextInt(9);
+                    if (!markedIndexes.contains(randomIndex)) {
+                        markedIndexes.add(randomIndex);
+                        card.add(row, randomIndex, -1);
+                    }
+                }
+            }
+
+            // Bağlantıları ayarla
+            if (i == 0) {
+                firstPlayerCard = card;
+            } else {
+                currentPlayerCard.next = card;
+            }
+            currentPlayerCard = card;
+        }
+
+        return firstPlayerCard;
+    }
+     */
+    private void start() {
+        stopButton.setEnabled(true);
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            Random rand = new Random();
+
+            @Override
+            public void run() {
+                int index = rand.nextInt(sayilar.size());
+                numberLabel.setText(Integer.toString(sayilar.get(index)));
+            }
+        }, 0, 100); // 100ms aralıklarla sayı değiştir
+    }
+
+    private void stop(int playerIndex) {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+            int value = Integer.parseInt(numberLabel.getText());
+
+            System.out.println("Stopped at: " + value);
+
+            sayilar.remove(Integer.valueOf(value));
+            numberLabel.setText("");
+
+            stopButton.setEnabled(false);
+
+            JOptionPane.showMessageDialog(this, "Çekilen sayı " + value + " " + "Kesedeki toplam eleman sayısı=" + sayilar.size(), "Information", JOptionPane.WARNING_MESSAGE);
+
+            MultiLinkedList currentList = playerCards;
+            for (int i = 1; i <= playerIndex; i++) {
+                if (currentList == null) {
+                    System.out.println("Hata: Oyuncu " + playerIndex + " bulunamadı.");
+                    return;
+                }
+                currentList = currentList.next;
+            }
+
+            NodeClass current = currentList.head;
+            int index = 1;
+            while (current != null) {
+                if (current.data == value) {
+                    JOptionPane.showMessageDialog(null, "TOMBOLA!", "Great!", JOptionPane.INFORMATION_MESSAGE);
+                    sumtmb.addElement("Player " + playerIndex + ", Tombola Number =" + value);
+                    // JLabel label = findLabelByIndex(index);
+
+                    /*while ("X".equals(label.getText())) {
+                        index++;
+                        label = findLabelByIndex(index);
+                        // Bir sonraki label'i al //Burada hata buraya bak
+                    }
+
+                    label.setText("T");
+                    label.setForeground(Color.red);
+                    current.data = -2;*/
+                    if (playerIndex == 1) {
+                        for (int l = 0; l < 27; l++) {
+                            JLabel label = findLabelByIndex(l + 1);
+                            try {
+
+                                int labelval = Integer.parseInt(label.getText());
+                                // intValue artık dönüştürülmüş tamsayı değerini içeriyor
+                                // intValue ile istediğiniz işlemleri gerçekleştirebilirsiniz
+
+                                if (labelval == value) {
+
+                                    label.setText("T");
+                                    label.setForeground(Color.red);
+                                    current.data = -2;
+
+                                }
+
+                            } catch (NumberFormatException e) {
+                                // Eğer dönüştürme başarısız olursa, buraya düşer
+                                // Uygun bir işlem yapabilirsiniz, örneğin hata mesajı gösterebilirsiniz
+                                System.out.println("Dönüştürme hatası: " + e.getMessage());
+                                continue;
+                            }
+
+                        }
+                    }
+
+                    if (playerIndex == 2) {
+                        for (int z = 0; z < 27; z++) {
+                            JLabel label = findLabelByIndex(z + 1);
+                            try {
+
+                                int labelval = Integer.parseInt(label.getText());
+                                // intValue artık dönüştürülmüş tamsayı değerini içeriyor
+                                // intValue ile istediğiniz işlemleri gerçekleştirebilirsiniz
+
+                                if (labelval == value) {
+
+                                    label.setText("T");
+                                    label.setForeground(Color.red);
+                                    current.data = -2;
+
+                                }
+
+                            } catch (NumberFormatException e) {
+                                // Eğer dönüştürme başarısız olursa, buraya düşer
+                                // Uygun bir işlem yapabilirsiniz, örneğin hata mesajı gösterebilirsiniz
+                                System.out.println("Dönüştürme hatası: " + e.getMessage());
+                                continue;
+                            }
+
+                        }
+                    }
+
+                } else {
+                    current = current.next;
+                    ++index;
+                }
+            }
+
+        }
+    }
     /*
     private MultiLinkedList generatePlayerCards(int numPlayers) {
     MultiLinkedList firstPlayer = new MultiLinkedList();
@@ -956,6 +1401,8 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
+    private javax.swing.JButton jButton7;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -991,5 +1438,392 @@ public class GameWindow extends javax.swing.JFrame {
     private javax.swing.JLabel jbl7;
     private javax.swing.JLabel jbl8;
     private javax.swing.JLabel jbl9;
+    private javax.swing.JLabel numberLabel;
+    private javax.swing.JButton startButton;
+    private javax.swing.JButton stopButton;
     // End of variables declaration//GEN-END:variables
+
+    private void printarraytolabel(String[] arr) {
+        int index = 1;
+        JLabel label = findLabelByIndex(index);
+        for (int r = 0; r < 27; r++) {
+
+            label = findLabelByIndex(r + 1);
+            if (arr[r] == "-2") {
+                label.setText("T");
+            } else if (arr[r] == "-1") {
+                label.setText("X");
+
+            } else {
+                label.setText(arr[r]);
+
+            }
+
+        }
+    }
+
+    private void generatatable() {
+        int index = 1;
+        int count = 0;
+        if (index == 1) {
+            clearAllLabels();
+            markRandomLabelsInGroups();
+
+            for (int i = 1; i <= 27; i++) {
+                JLabel label = findLabelByIndex(i);
+                if ("X".equals(label.getText())) {
+                    // lblarr'in sınırlarını kontrol et
+                    linkarr.addlbl(label);
+                    count++;
+
+                }
+            }
+            ++index;
+            count = 0;
+        }
+
+        if (index == 2) {
+            clearAllLabels();
+            markRandomLabelsInGroups();
+            for (int i = 1; i <= 27; i++) {
+                JLabel label = findLabelByIndex(i);
+                if ("X".equals(label.getText())) {
+                    // lblarr'in sınırlarını kontrol et
+                    link2arr.addlbl(label);
+                    count++;
+
+                }
+            }
+            ++index;
+            count = 0;
+        }
+
+    }
+
+    /*public void showX1card(int parameter) {
+        switch (parameter) {
+            case 1 -> {
+                for (JLabel label : lblarr) {
+                    label.setText("X");
+                }
+            }
+            case 2 -> {
+                for (JLabel label : lbl2arr) {
+                    label.setText("X");
+                }
+            }
+            default -> System.out.println("Geçersiz parametre! Sadece 1 veya 2 giriniz.");
+        }
+}*/
+    public void showXcard(int parameter) {
+        NodeClass current = linkarr.head;
+        NodeClass current2 = link2arr.head;
+        switch (parameter) {
+            case 1 -> {
+                while (current != null) {
+                    for (int i = 1; i <= 27; i++) {
+                        JLabel label = findLabelByIndex(i);
+                        if (current.labe == label) {
+                            label.setText("X");
+                        }
+                    }
+                    current = current.next;
+                }
+
+            }
+            case 2 -> {
+                while (current2 != null) {
+                    for (int i = 1; i <= 27; i++) {
+                        JLabel label = findLabelByIndex(i);
+                        if (current2.labe == label) {
+                            label.setText("X");
+                        }
+                    }
+                    current2 = current2.next;
+                }
+
+            }
+            default ->
+                System.out.println("Geçersiz parametre! Sadece 1 veya 2 giriniz.");
+        }
+    }
+
+    public void generatekese() {
+        Random random = new Random();
+        NodeClass current = kese.head;
+
+        while (current != null) {
+            int randomNumber = random.nextInt(91); // 0 dahil, 90 hariç rastgele sayı üretir
+            kese.add(randomNumber);
+
+          
+                
+           
+
+            current = current.next;
+        }
+
+    }
+
+    
+    public void generateRandomNumbers() {
+         mannum = new ArrayList<>();
+        Random random = new Random();
+
+        while (mannum.size() < 90) {
+            int randomNumber = random.nextInt(91); // 0 ile 90 arasında rastgele sayı üret
+            if (!mannum.contains(randomNumber)) { // Sayı daha önce eklenmediyse
+                mannum.add(randomNumber);
+            }
+        }
+    }
+    
+    
+ public int takenumberfromkese() {
+    NodeClass current = kese.head;
+    int selectedNumber = 0;
+
+    while (current != null) {
+        int num = current.data;
+        JOptionPane.showMessageDialog(rootPane, "You selected " + num);
+        selectedNumber = num; // Seçilen numarayı saklayalım
+        current = current.next; // Düğümü ilerlet
+    }
+    
+    JOptionPane.showMessageDialog(rootPane, "You selected " + selectedNumber);
+    
+    return selectedNumber;
+}
+ 
+ 
+  public int pullRandomNumber() {
+        if (!mannum.isEmpty()) {
+            Random random = new Random();
+            int randomIndex = random.nextInt(mannum.size()); // mannum listesinden rastgele bir sayı seç
+            int randomNumber = mannum.get(randomIndex); 
+            JOptionPane.showMessageDialog(rootPane, "You selected " +""+ randomNumber); // Seçilen sayıyı al
+            mannum.remove(randomIndex); // Seçilen sayıyı listeden sil
+            return randomNumber; // Seçilen sayıyı döndür
+             
+        } else {
+            // Eğer mannum listesi boşsa -1 döndürülebilir veya isteğe bağlı olarak bir hata veya istisna fırlatılabilir
+            throw new IllegalStateException("Listede çekilecek bir sayı bulunmuyor.");
+        }
+    }
+
+
+    public void checktombforman() {
+
+        NodeClass current = manualcard.head;
+        int playerIndex = 3;
+        int index = 3;
+        int value = pullRandomNumber();
+        while (current != null) {
+                if (current.data == value) {
+                    JOptionPane.showMessageDialog(null, "TOMBOLA!", "Great!", JOptionPane.INFORMATION_MESSAGE);
+                    sumtmb.addElement("Player " + playerIndex + ", Tombola Number =" + value);
+                    // JLabel label = findLabelByIndex(index);
+
+                    /*while ("X".equals(label.getText())) {
+                        index++;
+                        label = findLabelByIndex(index);
+                        // Bir sonraki label'i al //Burada hata buraya bak
+                    }
+
+                    label.setText("T");
+                    label.setForeground(Color.red);
+                    current.data = -2;*/
+                    if (playerIndex == 1) {
+                        for (int l = 0; l < 27; l++) {
+                            JLabel label = findLabelByIndex(l + 1);
+                            try {
+
+                                int labelval = Integer.parseInt(label.getText());
+                                // intValue artık dönüştürülmüş tamsayı değerini içeriyor
+                                // intValue ile istediğiniz işlemleri gerçekleştirebilirsiniz
+
+                                if (labelval == value) {
+
+                                    label.setText("T");
+                                    label.setForeground(Color.red);
+                                    current.data = -2;
+
+                                }
+
+                            } catch (NumberFormatException e) {
+                                // Eğer dönüştürme başarısız olursa, buraya düşer
+                                // Uygun bir işlem yapabilirsiniz, örneğin hata mesajı gösterebilirsiniz
+                                System.out.println("Dönüştürme hatası: " + e.getMessage());
+                                continue;
+                            }
+
+                        }
+                    }
+
+                    if (playerIndex == 3) {
+                        for (int z = 0; z < 27; z++) {
+                            JLabel label = findLabelByIndex(z + 1);
+                            try {
+
+                                int labelval = Integer.parseInt(label.getText());
+                                // intValue artık dönüştürülmüş tamsayı değerini içeriyor
+                                // intValue ile istediğiniz işlemleri gerçekleştirebilirsiniz
+
+                                if (labelval == value) {
+
+                                    label.setText("T");
+                                    label.setForeground(Color.red);
+                                    current.data = -2;
+
+                                }
+
+                            } catch (NumberFormatException e) {
+                                // Eğer dönüştürme başarısız olursa, buraya düşer
+                                // Uygun bir işlem yapabilirsiniz, örneğin hata mesajı gösterebilirsiniz
+                                System.out.println("Dönüştürme hatası: " + e.getMessage());
+                                continue;
+                            }
+
+                        }
+                    }
+
+                } else {
+                    current = current.next;
+                    ++index;
+                }
+            }
+    }
+
+    public void matrixprinttolinkedlist(int arr[][]) {
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] == -1) {
+                    continue;
+
+                } else {
+                    manualcard.add(j);
+
+                }
+
+            }
+        }
+
+    }
+
+    public void showmatrixcard() {
+        clearAllLabels();
+
+        NodeClass current = manualcard.head;
+
+        int index = 0;
+        //markaRandom();
+        showXmancard();
+
+        while (current != null) {
+
+            JLabel label = findLabelByIndex(++index);
+
+            if (!"X".equals(label.getText())) {
+                /*if (current.data == -1) {
+                    label.setText("X");
+                    label.setForeground(Color.BLACK);
+                    label.setBackground(Color.WHITE); // Arka plan rengi beyaz
+
+                } else*/ if (current.data == -2) {
+                    label.setText("T");
+                    label.setForeground(Color.RED); // Kırmızı renk
+
+                } else {
+                    label.setText(Integer.toString(current.data));
+                    label.setForeground(Color.BLACK);
+                    label.setBackground(Color.WHITE);
+                }
+                current = current.next;
+
+            } else {
+                System.out.println("Blok var bir sonraki label kontrolü sağlanıp ekleme yapılacak.");
+
+            }
+
+            /// Tekrardan findlabelyaptırt ve if bloğu açtır iki adet arraye indexlerine göre elemanlarını eklesin akabinde biz bunu yazdırıcaz.Ya da multidimensional arraylist yaptırt kullanıcı sayısı arttıkça grupları artırsın. Selecte bastığımızda ise o arrayin elemanlarını istenilene göre yazdırsın.
+            /// Check bingo metodunda arraye ekleme yaptırt eğer array[i] gelen dataya eşitse onu T yap
+            /// Selecte iki tane index adlı değişken yaptır eğer 1 seçildiyse 1 kere veya 2 seçildiyse 1 kere direk printi çalıştırsın
+        }
+
+    }
+
+    private void generatatableman() {
+
+        clearAllLabels();
+        markRandomLabelsInGroups();
+
+        for (int i = 1; i <= 27; i++) {
+            JLabel label = findLabelByIndex(i);
+            if ("X".equals(label.getText())) {
+                // lblarr'in sınırlarını kontrol et
+                linkmanual.addlbl(label);
+
+            }
+        }
+
+    }
+
+    public void showXmancard() {
+
+        NodeClass current = linkmanual.head;
+
+        while (current != null) {
+            for (int i = 1; i <= 27; i++) {
+                JLabel label = findLabelByIndex(i);
+                if (current.labe == label) {
+                    label.setText("X");
+                }
+            }
+            current = current.next;
+        }
+    }
+
+    private void checkbng() {
+        NodeClass current = linkmanual.head;
+        // 9x3 kart oluşturma
+        int cinko = 0;
+        int sumtomb = 0;
+        for (int row = 0; row < 3; row++) {
+            int tombala = 0;
+            for (int col = 0; col < 5; col++) {
+                if (current.data == -2) {
+                    tombala++;
+                    sumtomb++;
+                    current = current.next;
+                } else {
+                    current = current.next;
+                }
+
+            }
+            if (tombala > 4) {
+                cinko++;
+            }
+
+        }
+
+        jLabel3.setText(String.valueOf(cinko));
+        jLabel5.setText(String.valueOf(sumtomb));
+        boolean found = false;
+        int index = 0;
+        while (index < sumbng.size()) {
+            String element = String.valueOf(sumbng.getElementAt(index));
+            if (element.startsWith("Player" + 3)) {
+                found = true;
+                break;
+            }
+            index++;
+        }
+
+        // Eğer varsa değeri güncelle, yoksa yeni bir öğe ekle
+        if (found) {
+            sumbng.set(index, "Player" + 3 + ", Bingo Count =" + cinko);
+        } 
+    }
+
 }
